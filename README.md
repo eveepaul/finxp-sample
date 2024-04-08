@@ -1,4 +1,6 @@
-# FINXP sample page
+
+# https://eveepaul.github.io/finxp-sample/
+## FINXP sample page
 - https://finxp.com/euro-iban-account
 
 ### sample images links
