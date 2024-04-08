@@ -2,7 +2,7 @@
 import { ChevronRight, ChevronLeft } from 'lucide-vue-next';
 import { Button } from '@/components/shadcn/ui/button';
 import { Opted } from '@/types/opted';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps<{
     testimonials: Opted[];
@@ -18,7 +18,6 @@ const next = () => {
     else {
         current.value = 0;
     }
-    console.log('next!', current.value);
 };
 
 const prev = () => {
@@ -27,8 +26,16 @@ const prev = () => {
     } else {
         current.value = props.testimonials.length - 1;
     }
-    console.log('prev!', current.value);
 };
+
+let timer: ReturnType<typeof setInterval>;
+onMounted(() => {
+    timer = setInterval(next, 5000);
+});
+onUnmounted(() => {
+    clearInterval(timer);
+})
+
 </script>
 
 <template>
