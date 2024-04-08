@@ -1,7 +1,36 @@
 <script lang="ts" setup>
 import { ChevronRight, ChevronLeft } from 'lucide-vue-next';
 import { Button } from '@/components/shadcn/ui/button';
+import { Opted } from '@/types/opted';
+import { ref, computed } from 'vue';
+
+const props = defineProps<{
+    testimonials: Opted[];
+}>();
+
+const current = ref(0);
+
+const activeTestimony = computed(() => props.testimonials[current.value]);
+const next = () => {
+    if (current.value < props.testimonials.length - 1) {
+        current.value++;
+    }
+    else {
+        current.value = 0;
+    }
+    console.log('next!', current.value);
+};
+
+const prev = () => {
+    if (current.value > 0) {
+        current.value--;
+    } else {
+        current.value = props.testimonials.length - 1;
+    }
+    console.log('prev!', current.value);
+};
 </script>
+
 <template>
     <div class="flex justify-center w-full">
         <div class="flex flex-col w-1/2">
@@ -10,29 +39,24 @@ import { Button } from '@/components/shadcn/ui/button';
 
             <div class="flex gap-4 my-10">
                 <img
-                    src="@/assets/images/unsplash-1.jpeg"
+                    :src="activeTestimony.image"
                     alt="test"
                     class="object-cover w-64 h-64 rounded-lg"
                 >
                 <div
-                    class="container flex flex-col items-center justify-center flex-grow rounded-lg shadow-md bg-slate-50">
-                    <p> Lorem
-                        ipsum dolor sit amet consectetur
-                        adipisicing elit. Cum, accusamus. Earum neque temporibus
-                        quis praesentium animi, eius facilis provident
-                        reiciendis
-                        ex, minima magni unde architecto sunt nemo accusantium
-                        asperiores a.</p>
-                    <div class="flex justify-between w-full mt-10">
+                    class="container flex flex-col justify-between flex-grow rounded-lg shadow-md bg-slate-50">
+                    <p class="mt-10"> {{ activeTestimony.comment }}</p>
+                    <div class="flex justify-between w-full my-10">
                         <div>
-                            <div>Yves John Paul</div>
-                            <div>Test</div>
+                            <div>{{ activeTestimony.name }}</div>
+                            <div>{{ activeTestimony.title }}</div>
                         </div>
                         <div>
                             <Button
                                 variant="outline"
                                 size="icon"
                                 class="rounded-full"
+                                @click="prev"
                             >
                                 <ChevronLeft class="w-4 h-4" />
                             </Button>
@@ -40,6 +64,7 @@ import { Button } from '@/components/shadcn/ui/button';
                                 variant="outline"
                                 size="icon"
                                 class="rounded-full"
+                                @click="next"
                             >
                                 <ChevronRight class="w-4 h-4" />
                             </Button>
@@ -51,6 +76,4 @@ import { Button } from '@/components/shadcn/ui/button';
     </div>
 </template>
 
-
-
-<style></style>
+<style scoped></style>
