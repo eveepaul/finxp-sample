@@ -1,11 +1,11 @@
-<script
-  setup
-  lang="ts"
->
+<script setup lang="ts">
+import Jumbotron from '@/components/Jumbotron.vue';
+import Benefits from '@/components/Benefits.vue';
 </script>
 
 <template>
-  asdasda
+  <Jumbotron />
+  <Benefits />
 </template>
 
 <style scoped></style>
